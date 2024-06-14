@@ -3,8 +3,8 @@ import { encryptPassword } from "../helper/userHelper.js";
 
 const registerController = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
-    if (!name || !email || !password) {
+    const { username, email, password } = req.body;
+    if (!username || !email || !password) {
       return res
         .status(400)
         .send({ success: false, message: "Credentials required" });
@@ -20,7 +20,7 @@ const registerController = async (req, res) => {
     const hashedPassword = await encryptPassword(password);
     //create a user
     const newUser = await userModel.create({
-      name,
+      username,
       email,
       password: hashedPassword,
     });

@@ -2,6 +2,7 @@ import express from "express";
 import connect from "./config/dbConfig.js";
 import dotenv from "dotenv";
 import morgan from "morgan";
+import cors from "cors";
 
 dotenv.config();
 connect();
@@ -12,6 +13,8 @@ const app = express();
 app.use(morgan("dev"));
 // terminal ma req.body log garna ko lai
 app.use(express.json());
+//cors
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 // importing routes
 import userRoutes from "./routes/userRoutes.js";
 app.use("/api/v1/users", userRoutes);
