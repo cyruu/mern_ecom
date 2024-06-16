@@ -15,52 +15,34 @@ import { toast } from "react-toastify";
 
 export default function Login() {
   const [userData, setUserData] = useState({
-    username: "",
     email: "",
     password: "",
   });
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      const res = await axios.post(
-        "http://localhost:3000/api/v1/users/register",
-        userData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const res = await axios.post("http://localhost:3000/api/v1/users/login", {
+        email: userData.email,
+        password: userData.password,
+      });
 
       console.log(res.data);
     } catch (error) {
-      console.log(error);
+      console.log(error.response.data.message);
     }
   }
   return (
     <form onSubmit={handleSubmit}>
       <Card className="mx-auto max-w-sm">
         <CardHeader>
-          <CardTitle className="text-xl">Sign Up</CardTitle>
+          <CardTitle className="text-xl">Login</CardTitle>
           <CardDescription>
-            Enter your information to create an account
+            Enter your information to Login to an account
           </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid gap-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="grid gap-2">
-                <Label htmlFor="first-name">Username</Label>
-                <Input
-                  id="first-name"
-                  required
-                  value={userData.username}
-                  onChange={(e) =>
-                    setUserData({ ...userData, username: e.target.value })
-                  }
-                />
-              </div>
-            </div>
+            <div className="grid grid-cols-2 gap-4"></div>
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
               <Input
@@ -85,13 +67,13 @@ export default function Login() {
               />
             </div>
             <Button type="submit" className="w-full">
-              Create an account
+              Login
             </Button>
           </div>
           <div className="mt-4 text-center text-sm">
-            Already have an account?{" "}
-            <Link href="#" className="underline">
-              Sign in
+            New?{" "}
+            <Link to="/register" className="underline">
+              Create an account
             </Link>
           </div>
         </CardContent>

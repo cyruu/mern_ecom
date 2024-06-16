@@ -3,12 +3,15 @@ import connect from "./config/dbConfig.js";
 import dotenv from "dotenv";
 import morgan from "morgan";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 
 dotenv.config();
 connect();
 
 const app = express();
 
+//cookie parser
+app.use(cookieParser());
 // middleware
 app.use(morgan("dev"));
 // terminal ma req.body log garna ko lai

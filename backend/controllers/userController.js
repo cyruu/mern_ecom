@@ -1,5 +1,6 @@
 import userModel from "../models/userModel.js";
-import { encryptPassword } from "../helper/userHelper.js";
+import { encryptPassword, comparePassword } from "../helper/userHelper.js";
+import jwt from "jsonwebtoken";
 
 const registerController = async (req, res) => {
   try {
@@ -31,4 +32,36 @@ const registerController = async (req, res) => {
   }
 };
 
-export { registerController };
+// loginController
+const loginController = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    console.log("email before response", req.body);
+    const user = await userModel.findOne({ email });
+    if (!user) {
+      return res.status(400).send({ success: false, message: "No user found" });
+    }
+    // check if password match
+    const passMatch = await comparePassword(password, user.password);
+    if (!passMatch) {
+      return res
+        .status(400)
+        .send({ success: false, message: "Incorrect password" });
+    }
+    // set a jwt token
+    const tokenData = {
+      email: user.email,
+      id: user._id,
+      username: user.username,
+    };
+    const token = jwt.sign(tokenData, "ecomkey", { expiresIn: "10h" });
+    res.cookie("token", token, { httpOnly: true });
+    return res
+      .status(200)
+      .send({ success: true, message: "userfound", token, user });
+  } catch (error) {
+    return res.status(400).send({ success: false, message: error.message });
+  }
+};
+
+export { registerController, loginController };
