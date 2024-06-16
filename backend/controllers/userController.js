@@ -55,8 +55,8 @@ const loginController = async (req, res) => {
       username: user.username,
     };
     const token = jwt.sign(tokenData, "ecomkey", { expiresIn: "10h" });
-    res.cookie("token", token, { httpOnly: true });
     return res
+      .cookie("token", token, { httpOnly: true })
       .status(200)
       .send({ success: true, message: "userfound", token, user });
   } catch (error) {
