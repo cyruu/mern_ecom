@@ -13,7 +13,7 @@ import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-export default function Register() {
+export default function Login() {
   const [userData, setUserData] = useState({
     username: "",
     email: "",
