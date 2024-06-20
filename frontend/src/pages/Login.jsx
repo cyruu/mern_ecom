@@ -29,7 +29,7 @@ export default function Login() {
         },
         {
           // yo lekhene vane application ma cookie dekhaundaina
-          // for adding cookie in server side
+
           withCredentials: true,
           headers: {
             "Content-Type": "application/json",
