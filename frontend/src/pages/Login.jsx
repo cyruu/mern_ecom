@@ -26,7 +26,13 @@ export default function Login() {
 
     dis(login(userData))
       .unwrap()
-      .then((res) => console.log(res))
+      .then((res) => {
+        if (res != null) {
+          console.log("loginnnnnnnnn");
+        } else {
+          console.log("error");
+        }
+      })
       .catch((err) => console.log(err));
   }
   return (

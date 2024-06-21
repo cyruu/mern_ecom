@@ -3,16 +3,24 @@ import authService from "./authService";
 
 export const login = createAsyncThunk("auth/login", async (user, thunkAPI) => {
   try {
-    return await authService.loginUser(user);
+    const res = await authService.loginUser(user);
+    if (res.success) {
+      return res.user;
+    }
+    return null;
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
   }
 });
 
+const getUserFromLocalStorage = window.localStorage.getItem("user")
+  ? JSON.parse(window.localStorage.getItem("user"))
+  : null;
+
 export const authSlice = createSlice({
   name: "auth",
   initialState: {
-    user: null,
+    user: getUserFromLocalStorage,
     status: "idle",
     error: null,
   },

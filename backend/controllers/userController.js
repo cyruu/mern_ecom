@@ -60,7 +60,9 @@ const loginController = async (req, res) => {
       .status(200)
       .send({ success: true, message: "userfound", token, user });
   } catch (error) {
-    return res.status(400).send({ success: false, message: error.message });
+    return res
+      .status(400)
+      .send({ success: false, message: error.message.response });
   }
 };
 
