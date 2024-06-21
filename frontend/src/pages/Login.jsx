@@ -12,35 +12,22 @@ import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { login } from "@/store/features/auth/authslice";
 
 export default function Login() {
+  const dis = useDispatch();
   const [userData, setUserData] = useState({
     email: "",
     password: "",
   });
   async function handleSubmit(e) {
     e.preventDefault();
-    try {
-      const res = await axios.post(
-        "http://localhost:3000/api/v1/users/login",
-        {
-          email: userData.email,
-          password: userData.password,
-        },
-        {
-          // yo lekhene vane application ma cookie dekhaundaina
 
-          withCredentials: true,
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      console.log(res.data);
-    } catch (error) {
-      console.log(error.response.data.message);
-    }
+    dis(login(userData))
+      .unwrap()
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
   }
   return (
     <form onSubmit={handleSubmit}>
