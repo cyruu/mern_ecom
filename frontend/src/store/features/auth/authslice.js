@@ -33,6 +33,7 @@ export const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.status = "success";
         state.user = action.payload;
+        window.location.href = "/";
       })
       .addCase(login.rejected, (state) => {
         state.status = "failed";
