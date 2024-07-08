@@ -13,11 +13,11 @@ const app = express();
 //cookie parser
 // app.use(cookieParser());
 // middleware
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 app.use(morgan("dev"));
 // terminal ma req.body log garna ko lai
 app.use(express.json());
 //cors
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 // importing routes
 import userRoutes from "./routes/userRoutes.js";
 app.use("/api/v1/users", userRoutes);
